@@ -68,6 +68,11 @@
                     <i class="fa-solid fa-layer-group w-5 text-center group-hover:scale-110 transition"></i>
                     <span class="font-medium">Section Home</span>
                 </a>
+                <a href="{{ route('admin.locations.index') }}" 
+   class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->routeIs('admin.locations.*') ? 'bg-brand-primary text-white shadow-lg shadow-blue-900/50' : 'text-slate-400 hover:bg-sidebar-hover hover:text-white' }}">
+    <i class="fa-solid fa-map-location-dot w-5 text-center group-hover:scale-110 transition"></i>
+    <span class="font-medium">Master Wilayah</span>
+</a>
 
             </nav>
 

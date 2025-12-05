@@ -6,19 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        // Tabel Pivot: Menghubungkan Section (Promo) dengan Hotel
+        // PERHATIKAN: Ini membuat tabel 'section_hotel', BUKAN 'sections'
         Schema::create('section_hotel', function (Blueprint $table) {
             $table->id();
-            // Pastikan tipe data id sama (foreignId otomatis bigint unsigned)
+            
+            // Relasi ke tabel sections
             $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
+            
+            // Relasi ke tabel hotels
             $table->foreignId('hotel_id')->constrained('hotels')->cascadeOnDelete();
-            $table->string('tag')->nullable(); // Contoh: "Top Hotel", "Great Offer"
+            
+            // Tag tambahan, misal: "Top Hotel", "Great Offer"
+            $table->string('tag')->nullable();
+            
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('section_hotel');

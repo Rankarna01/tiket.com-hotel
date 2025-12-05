@@ -6,7 +6,7 @@
 
     <div class="h-8 md:h-6"></div>
 
-    <x-home.search-history :histories="$searchHistory" />
+    {{-- <x-home.search-history :histories="$searchHistory" /> --}}
     
     <div class="h-8"></div>
 

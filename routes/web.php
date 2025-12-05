@@ -28,7 +28,7 @@ Route::post('/register', [App\Http\Controllers\Auth\LoginController::class, 'reg
 // 2. ADMIN ROUTES (Protected by Auth Middleware)
 // ====================================================
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    
+    Route::resource('locations', App\Http\Controllers\Admin\LocationController::class);
     // Dashboard (Sekaligus List Hotel & CRUD Modal Hotel)
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('sections', SectionController::class);

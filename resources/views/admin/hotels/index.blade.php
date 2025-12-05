@@ -161,16 +161,25 @@
                             <input type="text" name="name" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required placeholder="Contoh: Labak River Hotel">
                         </div>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Kota / Area</label>
-                                <input type="text" name="city" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required placeholder="Ubud, Bali">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Alamat Lengkap</label>
-                                <input type="text" name="address" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required>
-                            </div>
-                        </div>
+                       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-2">Wilayah Utama</label>
+        <div class="relative">
+            <select name="location_id" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 bg-white" required>
+                <option value="" disabled selected>Pilih Wilayah...</option>
+                @foreach($locations as $loc)
+                    <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                @endforeach
+            </select>
+            <i class="fa-solid fa-chevron-down absolute right-4 top-3.5 text-gray-400 text-xs pointer-events-none"></i>
+        </div>
+    </div>
+
+    <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-2">Area Spesifik</label>
+        <input type="text" name="city" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500" required placeholder="Contoh: Ubud, Kuta, Dago">
+    </div>
+</div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>

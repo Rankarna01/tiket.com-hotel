@@ -19,10 +19,15 @@ class Hotel extends Model
     {
         return $this->belongsToMany(Facility::class, 'facility_hotel');
     }
-    
+
     // Relasi ke Section (yang sebelumnya)
     public function sections()
     {
         return $this->belongsToMany(Section::class, 'section_hotel');
+    }
+    // Tambahkan di dalam class Hotel
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
     }
 }
