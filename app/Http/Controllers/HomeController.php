@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Promo;
+use App\Models\Location; // Import
 use App\Models\Hotel;
 use App\Models\Section; // Pastikan Model Section di-import
+
 
 class HomeController extends Controller
 {
@@ -53,11 +55,13 @@ class HomeController extends Controller
         // 3. Data Dinamis Section (AMBIL DARI DATABASE)
         // Kita ambil semua section beserta hotel-hotel yang sudah direlasikan
         $promoSections = Section::with('hotels')->get();
-
+        $locations = Location::all();
+        $inspirations = \App\Models\Inspiration::latest()->take(4)->get();
         // 4. Promo Banner Slider (Banner Kecil)
         $promos = Promo::latest()->get();
+        $partners = \App\Models\Partner::all();
 
-        return view('pages.home', compact('heroSlides', 'searchHistory', 'promoSections', 'promos'));
+        return view('pages.home', compact('heroSlides', 'searchHistory', 'promoSections', 'promos', 'inspirations','locations', 'partners'));
     }
 
     // Detail Hotel
@@ -69,12 +73,81 @@ class HomeController extends Controller
     // Detail Banner Promo Statis
     public function promoDetail($id)
     {
-        $detail = [
-            'id' => $id,
-            'title' => 'Detail Promo Banner ' . $id,
-            'description' => 'Ini adalah halaman detail untuk banner nomor ' . $id . '. Di sini nanti berisi syarat & ketentuan promo lengkap.',
-            'image' => 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200'
-        ];
+        // Data Default
+        $detail = [];
+
+        switch ($id) {
+            case 1: // Banner 1: Halo Tiket
+                $detail = [
+                    'id' => 1,
+                    'title' => 'Ubah Jadwal Nginep? Kami Urus Seketika!',
+                    'subtitle' => 'Fitur Smart Reschedule',
+                    'image' => 'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit720360gsm/mobile-modules/2025/11/24/061cae02-3e28-410a-82f2-b47a24b9c581-1763952569823-f3e556934cc7efce29330dddb5ddae5a.png',
+                    'type' => 'reward', // Tampilan Biasa (Teks)
+                    'description' => 'Rencana berubah dadakan? Jangan panik! Dengan fitur Halo Tiket, kamu bisa mengajukan reschedule atau refund dengan proses yang super cepat dan mudah.'
+                ];
+                break;
+
+            case 2: // Banner 2: All Stars
+                $detail = [
+                    'id' => 2,
+                    'title' => 'Hotel All-Stars: Pilihan Terbaik',
+                    'subtitle' => 'Temukan hotel yang pas untuk setiap perjalananmu',
+                    'image' => 'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit720360gsm/mobile-modules/2025/11/24/72fd4f31-216c-4dc8-a6a5-c682644c8fb6-1763952580222-4d94df95847cc9e38f47b00f263a5862.png',
+                    'type' => 'reward',
+                    'description' => 'Nikmati pengalaman menginap tak terlupakan di koleksi Hotel All-Stars kami. Dipilih berdasarkan rating tertinggi dan pelayanan terbaik.'
+                ];
+                break;
+
+            case 3: // Banner 3: STAY WITH BENEFITS (Tampilan Khusus)
+                $detail = [
+                    'id' => 3,
+                    'title' => 'Stay With Benefits PLUS',
+                    'subtitle' => 'Pesan hotel, raih 850rb!',
+                    'image' => 'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit720360gsm/mobile-modules/2025/10/06/8cded79d-bca8-4eeb-aefb-c341e491a5db-1759728614890-c7f4f67565d31de1d815bf900a599704.png',
+                    'type' => 'reward', // Tipe Khusus
+                    'description' => 'Program loyalitas khusus buat kamu yang hobi staycation.'
+                ];
+                break;
+                
+            default:
+                abort(404);
+        }
+
         return view('pages.promo-detail', compact('detail'));
     }
+
+
+    public function locationDetail($slug)
+{
+    // 1. Ambil Data Lokasi
+    $location = Location::where('slug', $slug)->firstOrFail();
+
+    // 2. Ambil Hotel di Lokasi Tersebut
+    $hotels = Hotel::where('location_id', $location->id)
+                    ->with('facilities')
+                    ->latest()
+                    ->get();
+
+    // 3. Ambil Promo untuk Slider (Reuse)
+    $promos = Promo::latest()->get();
+
+    return view('pages.location-detail', compact('location', 'hotels', 'promos'));
 }
+
+
+public function partnerDetail($slug)
+{
+    $partner = \App\Models\Partner::where('slug', $slug)->firstOrFail();
+    
+    // Ambil Hotel milik partner ini
+    $hotels = Hotel::where('partner_id', $partner->id)->latest()->get();
+    
+    // Promo Slider (Reuse)
+    $promos = \App\Models\Promo::latest()->get();
+
+    return view('pages.partner-detail', compact('partner', 'hotels', 'promos'));
+}
+}
+
+

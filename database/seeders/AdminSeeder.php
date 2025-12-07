@@ -9,6 +9,8 @@ use App\Models\Facility;
 use App\Models\Location; // Jangan lupa import
 use App\Models\Section;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Partner;
+
 
 class AdminSeeder extends Seeder
 {
@@ -64,6 +66,13 @@ class AdminSeeder extends Seeder
             ],
         ]);
 
+        $accor = Partner::create([
+    'name' => 'Accor Hotels',
+    'slug' => 'accor-hotels',
+    'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Accor_Logo.svg/1200px-Accor_Logo.svg.png', // Ganti path lokal nanti
+    'banner_image' => 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2000'
+]);
+$hotel->update(['partner_id' => $accor->id]);
         // Hubungkan fasilitas ke hotel
         $hotel->facilities()->attach(Facility::limit(5)->pluck('id'));
         

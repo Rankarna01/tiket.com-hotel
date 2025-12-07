@@ -9,4 +9,10 @@ class Promo extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+
+    public function hotels()
+    {
+        return $this->belongsToMany(Hotel::class, 'promo_hotel');
+    }
 }

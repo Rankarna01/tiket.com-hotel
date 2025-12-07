@@ -1,5 +1,5 @@
 <x-layouts.admin>
-    <div x-data="{ openModal: false }">
+    <div x-data="{ openModal: {{ $errors->any() ? 'true' : 'false' }} }">
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 hover:-translate-y-1 transition duration-300">
@@ -11,27 +11,7 @@
                     <h4 class="text-2xl font-bold text-gray-800">{{ $hotels->count() }}</h4>
                 </div>
             </div>
-            
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 hover:-translate-y-1 transition duration-300">
-                <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 text-2xl">
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-500 font-medium">Rata-rata Rating</p>
-                    <h4 class="text-2xl font-bold text-gray-800">4.8</h4>
-                </div>
             </div>
-
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 hover:-translate-y-1 transition duration-300">
-                <div class="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl">
-                    <i class="fa-solid fa-users"></i>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-500 font-medium">Pengunjung Bulan Ini</p>
-                    <h4 class="text-2xl font-bold text-gray-800">1.2K</h4>
-                </div>
-            </div>
-        </div>
 
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
@@ -42,6 +22,12 @@
                 <i class="fa-solid fa-plus"></i> Tambah Hotel
             </button>
         </div>
+
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="overflow-x-auto">
@@ -67,7 +53,6 @@
                                             <i class="fa-solid fa-image"></i>
                                         </div>
                                     @endif
-                                    
                                     <div>
                                         <span class="font-bold text-slate-800 block">{{ $hotel->name }}</span>
                                         <span class="text-xs text-orange-500 flex items-center gap-1">
@@ -77,49 +62,33 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-gray-600">
-                                <i class="fa-solid fa-location-dot text-gray-400 mr-1"></i> {{ $hotel->city }}
+                                <i class="fa-solid fa-location-dot text-gray-400 mr-1"></i> {{ $hotel->location->name ?? '-' }}
                             </td>
                             <td class="px-6 py-4">
                                 <div class="font-bold text-slate-800">Rp {{ number_format($hotel->price) }}</div>
-                                <div class="text-xs text-gray-400 line-through">Rp {{ number_format($hotel->original_price) }}</div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-wrap gap-1">
                                     @foreach($hotel->facilities->take(2) as $fac)
-                                        <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md border border-gray-200">
-                                            {{ $fac->name }}
-                                        </span>
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md border border-gray-200">{{ $fac->name }}</span>
                                     @endforeach
-                                    
                                     @if($hotel->facilities->count() > 2)
-                                        <span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-md border border-gray-200">
-                                            +{{ $hotel->facilities->count() - 2 }}
-                                        </span>
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-md border border-gray-200">+{{ $hotel->facilities->count() - 2 }}</span>
                                     @endif
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="{{ route('hotel.detail', $hotel->slug) }}" target="_blank" class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Lihat">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                    <form action="{{ route('admin.hotels.destroy', $hotel->id) }}" method="POST" onsubmit="return confirm('Yakin hapus hotel ini?')">
-                                        @csrf @method('DELETE')
-                                        <button class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
+                                <form action="{{ route('admin.hotels.destroy', $hotel->id) }}" method="POST" onsubmit="return confirm('Yakin hapus hotel ini?')">
+                                    @csrf @method('DELETE')
+                                    <button class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-12 text-center text-gray-400">
-                                <div class="flex flex-col items-center gap-2">
-                                    <i class="fa-regular fa-folder-open text-4xl mb-2"></i>
-                                    <p>Belum ada data hotel.</p>
-                                </div>
-                            </td>
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-400">Belum ada data hotel.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -129,18 +98,10 @@
 
         <div x-show="openModal" x-cloak 
              class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0">
+             x-transition.opacity>
             
             <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
-                 @click.away="openModal = false"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
-                 x-transition:enter-end="opacity-100 scale-100 translate-y-0">
+                 @click.away="openModal = false">
                 
                 <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
                     <div>
@@ -153,48 +114,64 @@
                 </div>
                 
                 <div class="p-6 overflow-y-auto custom-scrollbar">
+                    
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                            <strong class="font-bold">Ada kesalahan input!</strong>
+                            <ul class="mt-1 list-disc list-inside text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form action="{{ route('admin.hotels.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5" id="hotelForm">
                         @csrf
                         
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Hotel</label>
-                            <input type="text" name="name" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required placeholder="Contoh: Labak River Hotel">
+                            <input type="text" name="name" value="{{ old('name') }}" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required placeholder="Contoh: Labak River Hotel">
                         </div>
                         
-                       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-    <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-2">Wilayah Utama</label>
-        <div class="relative">
-            <select name="location_id" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 bg-white" required>
-                <option value="" disabled selected>Pilih Wilayah...</option>
-                @foreach($locations as $loc)
-                    <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                @endforeach
-            </select>
-            <i class="fa-solid fa-chevron-down absolute right-4 top-3.5 text-gray-400 text-xs pointer-events-none"></i>
-        </div>
-    </div>
-
-    <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-2">Area Spesifik</label>
-        <input type="text" name="city" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500" required placeholder="Contoh: Ubud, Kuta, Dago">
-    </div>
-</div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Wilayah Utama</label>
+                                <div class="relative">
+                                    <select name="location_id" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 bg-white" required>
+                                        <option value="" disabled selected>Pilih Wilayah...</option>
+                                        @foreach($locations as $loc)
+                                            <option value="{{ $loc->id }}" {{ old('location_id') == $loc->id ? 'selected' : '' }}>{{ $loc->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down absolute right-4 top-3.5 text-gray-400 text-xs pointer-events-none"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Area Spesifik</label>
+                                <input type="text" name="city" value="{{ old('city') }}" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500" required placeholder="Contoh: Ubud, Kuta, Dago">
+                            </div>
+                        </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-2">Harga Asli (Coret)</label>
-                                <input type="number" name="original_price" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required>
+                                <input type="number" name="original_price" value="{{ old('original_price') }}" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 mb-2">Harga Diskon (Tampil)</label>
-                                <input type="number" name="price" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required>
+                                <input type="number" name="price" value="{{ old('price') }}" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required>
                             </div>
                         </div>
 
                         <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Alamat Lengkap</label>
+                            <input type="text" name="address" value="{{ old('address') }}" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition" required>
+                        </div>
+
+                        <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Deskripsi</label>
-                            <textarea name="description" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition h-24 resize-none" required></textarea>
+                            <textarea name="description" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 transition h-24 resize-none" required>{{ old('description') }}</textarea>
                         </div>
 
                         <div>
@@ -208,6 +185,15 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div>
+    <label class="block text-sm font-semibold text-slate-700 mb-2">Partner Group (Opsional)</label>
+    <select name="partner_id" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none bg-white">
+        <option value="">Tidak Ada Partner</option>
+        @foreach($partners as $p)
+            <option value="{{ $p->id }}">{{ $p->name }}</option>
+        @endforeach
+    </select>
+</div>
 
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Upload Foto Hotel (Max 5)</label>

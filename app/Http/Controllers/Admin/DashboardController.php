@@ -9,6 +9,8 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Partner;
+
 
 class DashboardController extends Controller
 {
@@ -16,12 +18,12 @@ class DashboardController extends Controller
     public function index() {
         // Load data hotel dengan relasi fasilitas & lokasi
         $hotels = Hotel::with(['facilities', 'location'])->latest()->get();
-        
+        $partners = Partner::all(); // Ambil data partner
         // Data untuk modal (Dropdown & Checkbox)
         $facilities = Facility::all();
         $locations = Location::all(); 
 
-        return view('admin.hotels.index', compact('hotels', 'facilities', 'locations'));
+        return view('admin.hotels.index', compact('hotels', 'facilities', 'locations', 'partners'));
     }
 
     // 2. Simpan Hotel Baru
@@ -38,6 +40,11 @@ class DashboardController extends Controller
             'hotel_images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'facilities' => 'array',
         ]);
+
+        $hotel = Hotel::create([
+        // ... field lain ...
+        'partner_id' => $request->partner_id, 
+    ]);
 
         // Proses Upload Gambar
         $imagePaths = [];

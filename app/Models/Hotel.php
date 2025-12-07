@@ -30,4 +30,14 @@ class Hotel extends Model
     {
         return $this->belongsTo(Location::class);
     }
+
+    public function promos()
+{
+    return $this->belongsToMany(Promo::class, 'promo_hotel');
+}
+
+public function partner()
+{
+    return $this->belongsTo(Partner::class);
+}
 }

@@ -32,11 +32,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     // Dashboard (Sekaligus List Hotel & CRUD Modal Hotel)
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('sections', SectionController::class);
-    
+    Route::resource('inspirations', App\Http\Controllers\Admin\InspirationController::class);
     // Proses Tambah & Hapus Hotel
     Route::post('/hotels', [DashboardController::class, 'store'])->name('hotels.store');
     Route::delete('/hotels/{hotel}', [DashboardController::class, 'destroy'])->name('hotels.destroy');
-
+    Route::resource('partners', App\Http\Controllers\Admin\PartnerController::class);
     // Manajemen Promo (Resource Controller)
     Route::resource('promos', PromoController::class);
 });
@@ -48,10 +48,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
 // Halaman Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+// Route Detail Lokasi
+Route::get('/destinasi/{slug}', [HomeController::class, 'locationDetail'])->name('location.detail');
 // Halaman Detail Hotel (Slug dinamis)
 Route::get('/hotel/{slug}', [HomeController::class, 'hotelDetail'])->name('hotel.detail');
-
+Route::get('/partner/{slug}', [App\Http\Controllers\HomeController::class, 'partnerDetail'])->name('partner.detail');
 // Halaman Detail Promo (Banner Statis 1, 2, 3)
 Route::get('/promo-banner/{id}', [HomeController::class, 'promoDetail'])->name('promo.detail');
 
@@ -60,3 +61,8 @@ Route::get('/promo/{slug}', function($slug) {
     $promo = Promo::where('slug', $slug)->firstOrFail();
     return view('pages.promo-detail-dynamic', compact('promo'));
 })->name('promo.detail.slug');
+
+Route::get('/inspiration/{slug}', function($slug) {
+    $inspiration = \App\Models\Inspiration::with('hotels')->where('slug', $slug)->firstOrFail();
+    return view('pages.inspiration-detail', compact('inspiration'));
+})->name('inspiration.detail');

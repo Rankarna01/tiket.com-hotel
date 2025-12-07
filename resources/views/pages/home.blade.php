@@ -6,7 +6,7 @@
 
     <div class="h-8 md:h-6"></div>
 
-    {{-- <x-home.search-history :histories="$searchHistory" /> --}}
+{{-- <x-home.search-history :histories="$searchHistory" /> --}}
     
     <div class="h-8"></div>
 
@@ -30,6 +30,14 @@
     <x-home.promo-banners />
 
     <x-home.promo-slider :promos="$promos" />
+
+    <x-home.inspiration-section :inspirations="$inspirations" />
+
+    <x-home.location-grid :locations="$locations" />
+
+    <x-home.app-banner />
+
+    <x-home.partner-section :partners="$partners" />
     <div class="h-20"></div>
 
 </x-layouts.app>
