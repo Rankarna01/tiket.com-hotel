@@ -37,9 +37,9 @@
                 <p class="text-2xl font-bold text-rose-600">IDR {{ number_format($hotel->price, 0, ',', '.') }}</p>
                 <p class="text-xs text-slate-500">/kamar/malam (Termasuk Pajak)</p>
             </div>
-            <button class="mt-3 bg-brand-blue text-white px-6 py-3 rounded-xl font-bold shadow hover:bg-blue-700 w-full md:w-auto transition">
-                Pilih Kamar
-            </button>
+            <a href="#pilih-kamar" class="mt-3 inline-block text-center bg-brand-blue text-white px-6 py-3 rounded-xl font-bold shadow hover:bg-blue-700 w-full md:w-auto transition cursor-pointer">
+    Pilih Kamar
+</a>
         </div>
     </div>
 

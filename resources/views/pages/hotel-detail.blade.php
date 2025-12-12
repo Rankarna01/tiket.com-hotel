@@ -65,6 +65,8 @@
                     <x-hotel.facilities :facilities="$hotel->facilities" />
                 </div>
 
+                <x-hotel.room-list :hotel="$hotel" />
+
                 {{-- 4. Lokasi (BARU - Statis) --}}
                 <div id="location" class="scroll-mt-40 pt-6 border-t border-slate-100 mt-6">
                     <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">

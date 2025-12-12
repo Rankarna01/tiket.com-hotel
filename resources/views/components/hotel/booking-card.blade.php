@@ -47,9 +47,10 @@
         </div>
     </div>
 
-    <button class="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl hover:brightness-110 shadow-lg shadow-blue-500/30 transition transform active:scale-[0.98] mb-3">
-        Pesan Kamar Ini
-    </button>
+    <a href="{{ route('booking.checkout', $hotel->slug) }}" 
+   class="block text-center w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl hover:brightness-110 shadow-lg transition">
+    Pesan Kamar Ini
+</a>
     
     <button class="w-full bg-white border border-slate-200 text-slate-700 font-bold py-3 rounded-xl hover:bg-slate-50 transition">
         Lihat Kamar Lain

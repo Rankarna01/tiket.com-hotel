@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Hotel;
 use App\Models\Facility;
+use App\Models\User;
+use App\Models\Hotel;
 use App\Models\Location;
+use App\Models\Promo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\Storage;
 use App\Models\Partner;
+
 
 
 class DashboardController extends Controller
@@ -42,8 +46,20 @@ class DashboardController extends Controller
         ]);
 
         $hotel = Hotel::create([
-        // ... field lain ...
-        'partner_id' => $request->partner_id, 
+        'name' => $request->name,
+        'slug' => Str::slug($request->name) . '-' . Str::random(5),
+        
+        // TAMBAHKAN BARIS INI (Wajib)
+        'location_id' => $request->location_id, 
+        
+        'partner_id' => $request->partner_id, // Ini sudah ada
+        'city' => $request->city,
+        'address' => $request->address,
+        'price' => $request->price,
+        'original_price' => $request->original_price,
+        'description' => $request->description,
+        'rating' => 4.5,
+        
     ]);
 
         // Proses Upload Gambar

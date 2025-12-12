@@ -38,6 +38,14 @@
     <x-home.app-banner />
 
     <x-home.partner-section :partners="$partners" />
+{{-- 
+    <div id="special-offer">
+        <x-home.special-offer />
+    </div> --}}
+
+    <x-home.app-banner2/>
     <div class="h-20"></div>
+
+
 
 </x-layouts.app>
