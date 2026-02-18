@@ -6,7 +6,11 @@
 
     <div class="h-8 md:h-6"></div>
 
-{{-- <x-home.search-history :histories="$searchHistory" /> --}}
+<div class="hidden lg:block w-full lg:w-1/3 absolute right-0 top-1/2 -translate-y-1/2 px-8 z-20">
+    
+    <x-home.search-widget :popularHotels="$popularHotels ?? []" />
+
+</div>
     
     <div class="h-8"></div>
 

@@ -64,6 +64,7 @@ class HomeController extends Controller
         $promos = Promo::latest()->get();
         $partners = Partner::all();
 
+        $popularHotels = \App\Models\Hotel::with('location')->inRandomOrder()->take(5)->get();
         return view('pages.home', compact(
             'heroSlides', 
             'searchHistory', 
@@ -71,7 +72,8 @@ class HomeController extends Controller
             'promos', 
             'inspirations',
             'locations', 
-            'partners'
+            'partners',
+            'popularHotels'
         ));
     }
 

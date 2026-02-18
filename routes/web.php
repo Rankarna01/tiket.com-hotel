@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\PromoController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Promo;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\UserController;
@@ -22,6 +23,8 @@ use App\Http\Controllers\AdminController;
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 // Register Routes
 Route::get('/register', [App\Http\Controllers\Auth\LoginController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [App\Http\Controllers\Auth\LoginController::class, 'register'])->name('register.post');
