@@ -1,3 +1,4 @@
+@props(['popularHotels' => []])
 <div class="w-full md:max-w-xl lg:max-w-lg relative z-20" x-data="searchWidget()">
     
     <div class="rounded-2xl bg-white/95 backdrop-blur border border-slate-200 shadow-md p-4 mb-3 flex items-start gap-3">

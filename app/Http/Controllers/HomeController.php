@@ -21,7 +21,7 @@ class HomeController extends Controller
         // 1. Data Dummy Slider Hero
         $heroSlides = [
             [
-                'image' => 'https://images.pexels.com/photos/3201921/pexels-photo-3201921.jpeg',
+                'image' => 'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/t_htl-mobile/tix-hotel/images-web/2025/01/21/a5038115-4b28-4b3f-865c-dc15c7961978-1737444907251-f7124c0ef09e3521c19ca9acbd42c1a2.jpg',
                 'title' => 'Booking hotel murah online<br class="hidden sm:block" />dengan harga promo',
             ],
             [

@@ -3,8 +3,7 @@
         
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h1 class="text-2xl font-bold text-slate-800">Manajemen Promo Slider</h1>
-                <p class="text-gray-500 text-sm">Atur banner promo dan rekomendasi hotelnya.</p>
+                
             </div>
             <button @click="openCreateModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 shadow flex items-center gap-2">
                 <i class="fa-solid fa-plus"></i> Buat Promo Baru

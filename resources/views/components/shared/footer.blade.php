@@ -81,10 +81,10 @@
                 <h4 class="font-bold text-slate-900 mb-4">Lebih murah di aplikasi</h4>
                 <div class="space-y-3">
                     <a href="#" class="block w-40 hover:opacity-80 transition">
-                        <img src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/original/mobile-modules/2020/06/12/37402633-90d2-4322-b924-406a4f4d2bb2-1591937965939-24765b20695029e063073998f4489a24.png" alt="App Store" class="w-full">
+                        <img src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/original/core-fe/2023/10/02/1fb1b9f7-d1c1-4f4a-b3d0-fbc4bf650d46-1696218535267-2e77104dddb49130433a2fa22f28a1ff.png" alt="App Store" class="w-full">
                     </a>
                     <a href="#" class="block w-40 hover:opacity-80 transition">
-                        <img src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/original/mobile-modules/2020/06/12/30676a6d-8957-4665-8b92-b43063673070-1591937984209-679905908e2f07324c434923707c9561.png" alt="Google Play" class="w-full">
+                        <img src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/original/core-fe/2023/10/02/02f04be0-f138-40ba-8029-a903ca5e8f7c-1696218550137-4101e40f1d4d7099144a3f1ccd37d22c.png" alt="Google Play" class="w-full">
                     </a>
                 </div>
             </div>
@@ -95,7 +95,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
                 
                 <div class="flex items-center gap-3">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Wonderful_Indonesia_logo.svg/1200px-Wonderful_Indonesia_logo.svg.png" class="h-8 object-contain opacity-80 grayscale hover:grayscale-0 transition">
+                    <img src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/original/core-fe/2023/10/02/9bd6e26d-c968-4312-9877-b106bcf2d098-1696218640180-2c67098b30425b39967bbda9fec47b50.png" class="h-8 object-contain opacity-80 grayscale hover:grayscale-0 transition">
                     <div class="text-[10px] text-slate-500 leading-tight font-medium">
                         Partner Resmi<br>Kemenparekraf RI
                     </div>
